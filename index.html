@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gampaha Youth Club Management System — Animated Proposal</title>
+<title>Gampaha Youth Club Management System — Presentation Proposal</title>
+<!-- jsPDF Library for Direct PDF Download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
   --bg:#06101f;
@@ -17,14 +19,14 @@
   --green:#39d98a;
   --gold:#ffc857;
   --pink:#ef67b4;
-  --shadow:0 20px 60px rgba(0,0,0,.25);
+  --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;background:
-  radial-gradient(circle at 20% 10%,rgba(55,142,255,.14),transparent 28%),
-  radial-gradient(circle at 85% 18%,rgba(57,217,138,.10),transparent 24%),
+  radial-gradient(circle at 20% 10%,rgba(55,142,255,.16),transparent 28%),
+  radial-gradient(circle at 85% 18%,rgba(57,217,138,.12),transparent 24%),
   linear-gradient(180deg,var(--bg),var(--bg2) 45%,#071222);
   color:var(--text);font-family:"Noto Sans Sinhala","Segoe UI",Arial,sans-serif;line-height:1.7;
   overflow-x:hidden;
@@ -32,30 +34,48 @@ body{
 a{color:inherit;text-decoration:none}
 button{font:inherit}
 
-/* animated background */
-.bg-orb{position:fixed;border-radius:50%;filter:blur(1px);pointer-events:none;z-index:-1;opacity:.55}
-.orb1{width:260px;height:260px;background:rgba(85,166,255,.12);left:-80px;top:20%;animation:float1 10s ease-in-out infinite}
-.orb2{width:220px;height:220px;background:rgba(57,217,138,.10);right:-60px;top:48%;animation:float2 12s ease-in-out infinite}
-.orb3{width:180px;height:180px;background:rgba(239,103,180,.10);left:40%;bottom:5%;animation:float3 9s ease-in-out infinite}
+/* Animated background orbs */
+.bg-orb{position:fixed;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:-1;opacity:.6}
+.orb1{width:280px;height:280px;background:rgba(85,166,255,.15);left:-80px;top:20%;animation:float1 10s ease-in-out infinite}
+.orb2{width:240px;height:240px;background:rgba(57,217,138,.12);right:-60px;top:48%;animation:float2 12s ease-in-out infinite}
+.orb3{width:200px;height:200px;background:rgba(239,103,180,.12);left:40%;bottom:5%;animation:float3 9s ease-in-out infinite}
 @keyframes float1{50%{transform:translate(50px,-35px)}}
 @keyframes float2{50%{transform:translate(-45px,45px)}}
 @keyframes float3{50%{transform:translate(35px,-28px)}}
 
 .container{width:min(1200px,92%);margin:auto}
+
+/* Hero section */
 .hero{min-height:100vh;display:grid;place-items:center;position:relative;padding:70px 0}
 .hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:40px;align-items:center}
 .eyebrow{
   display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.06);
-  padding:7px 13px;border-radius:999px;color:#cce3ff;font-weight:800;font-size:13px;letter-spacing:.3px
+  padding:7px 15px;border-radius:999px;color:#cce3ff;font-weight:800;font-size:13px;letter-spacing:.3px
 }
 h1{font-size:clamp(40px,6vw,76px);line-height:1.02;margin:18px 0}
 .hero h1 span{background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-copy{font-size:18px;color:var(--muted);max-width:760px}
+
+/* Lead Author Meta Info Badge */
+.author-card{
+  display:flex;align-items:center;gap:15px;margin-top:20px;padding:12px 18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(85,166,255,.3);
+  border-radius:16px;backdrop-filter:blur(10px);width:fit-content;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+.author-avatar{
+  width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:grid;place-items:center;font-weight:900;font-size:18px;color:#06101f;
+}
+.author-details h4{margin:0;font-size:15px;color:#fff}
+.author-details p{margin:0;font-size:12px;color:var(--cyan);font-weight:600}
+
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
-.btn{padding:12px 18px;border-radius:12px;border:1px solid var(--line);font-weight:900;transition:.25s;cursor:pointer}
-.btn-primary{background:linear-gradient(135deg,#2f7cf7,#37b7f6);color:#fff}
+.btn{padding:12px 20px;border-radius:12px;border:1px solid var(--line);font-weight:900;transition:.25s;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,#2f7cf7,#37b7f6);color:#fff;border:none}
+.btn-pdf{background:linear-gradient(135deg,#e11d48,#f43f5e);color:#fff;border:none}
 .btn-ghost{background:rgba(255,255,255,.05);color:#fff}
-.btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(50,130,255,.18)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(50,130,255,.25)}
 
 .hero-visual{position:relative;min-height:490px}
 .ring{position:absolute;border-radius:50%;border:1px solid rgba(85,166,255,.28);left:50%;top:50%;transform:translate(-50%,-50%)}
@@ -77,58 +97,65 @@ h1{font-size:clamp(40px,6vw,76px);line-height:1.02;margin:18px 0}
 @keyframes node1{50%{transform:translateY(-12px)}} @keyframes node2{50%{transform:translateY(14px)}}
 @keyframes node3{50%{transform:translateY(-10px)}} @keyframes node4{50%{transform:translateY(10px)}}
 
+/* Sticky presentation navigation */
 .nav{
-  position:sticky;top:0;z-index:50;background:rgba(4,13,26,.78);backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:50;background:rgba(4,13,26,.85);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line)
 }
-.nav-inner{display:flex;gap:8px;align-items:center;overflow:auto;padding:9px 0}
-.nav a{white-space:nowrap;padding:8px 11px;border-radius:9px;color:var(--muted);font-size:13px;font-weight:800}
-.nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-inner{display:flex;gap:8px;align-items:center;overflow:auto;padding:10px 0;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:8px 12px;border-radius:9px;color:var(--muted);font-size:13px;font-weight:800;transition:.2s}
+.nav a:hover{background:rgba(255,255,255,.1);color:#fff}
 .progress{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));z-index:100}
 
-section{padding:85px 0}
+/* Presentation Slide Animation Effects */
+section{padding:90px 0;position:relative}
 .section-kicker{color:var(--cyan);font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .section-title{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}
 .section-title h2{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:8px 0}
 .section-title p{margin:0;max-width:760px;color:var(--muted)}
 
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
-.reveal.show{opacity:1;transform:translateY(0)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.reveal{opacity:0;transform:translateY(45px) scale(.98);transition:opacity .8s cubic-bezier(0.16, 1, 0.3, 1),transform .8s cubic-bezier(0.16, 1, 0.3, 1)}
+.reveal.show{opacity:1;transform:translateY(0) scale(1)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .card{
-  background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;
-  box-shadow:var(--shadow);position:relative;overflow:hidden
+  background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.3s ease
 }
+.card:hover{transform:translateY(-6px);border-color:rgba(85,166,255,.4)}
 .card:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.07),transparent 28%,transparent 70%,rgba(50,214,233,.05));pointer-events:none}
 .card h3{margin:0 0 7px;font-size:19px}
 .card p{margin:7px 0;color:var(--muted)}
-.icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:rgba(85,166,255,.12);border:1px solid rgba(85,166,255,.18);font-size:21px;margin-bottom:13px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.kpi{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
-.kpi b{display:block;font-size:34px;color:#fff}
+.icon{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;background:rgba(85,166,255,.12);border:1px solid rgba(85,166,255,.2);font-size:22px;margin-bottom:14px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;transition:.3s}
+.kpi:hover{transform:scale(1.04);border-color:var(--cyan)}
+.kpi b{display:block;font-size:36px;color:#fff}
 .kpi span{color:var(--muted);font-size:13px}
 
 .structure{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;gap:9px;align-items:center}
-.sbox{padding:16px 10px;border-radius:16px;text-align:center;font-weight:900;font-size:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);transition:.3s}
-.sbox:hover{transform:translateY(-6px);border-color:rgba(85,166,255,.45);box-shadow:0 12px 30px rgba(50,130,255,.12)}
+.sbox{padding:18px 10px;border-radius:16px;text-align:center;font-weight:900;font-size:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);transition:.3s}
+.sbox:hover{transform:translateY(-6px);border-color:rgba(85,166,255,.45);box-shadow:0 12px 30px rgba(50,130,255,.15)}
 .arrow{font-size:26px;color:var(--cyan)}
 
-.flow-wrap{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:20px;overflow:auto}
-.flow{display:flex;align-items:stretch;gap:12px;min-width:1000px}
-.flow-node{width:170px;padding:17px 13px;border-radius:15px;background:#0c1b31;border:1px solid rgba(85,166,255,.28);text-align:center;position:relative}
-.flow-node .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;margin:0 auto 8px;background:rgba(85,166,255,.16);color:var(--cyan);font-weight:900}
+.flow-wrap{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:24px;overflow:auto}
+.flow{display:flex;align-items:stretch;gap:12px;min-width:1020px}
+.flow-node{width:175px;padding:18px 14px;border-radius:16px;background:#0c1b31;border:1px solid rgba(85,166,255,.28);text-align:center;position:relative;transition:.3s}
+.flow-node .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;background:rgba(85,166,255,.16);color:var(--cyan);font-weight:900}
 .flow-arrow{align-self:center;color:var(--cyan);font-size:24px}
-.flow-node.active{animation:activeNode 1.8s ease-in-out infinite}
-@keyframes activeNode{50%{transform:translateY(-8px);box-shadow:0 12px 34px rgba(50,214,233,.12)}}
+.flow-node.active{animation:activeNode 1.8s ease-in-out infinite;border-color:var(--cyan)}
+@keyframes activeNode{50%{transform:translateY(-8px);box-shadow:0 12px 34px rgba(50,214,233,.22)}}
 
 .timeline{position:relative}
 .timeline:before{content:"";position:absolute;left:21px;top:0;bottom:0;width:2px;background:linear-gradient(var(--blue),var(--green))}
-.step{position:relative;padding-left:62px;margin:0 0 23px}
+.step{position:relative;padding-left:62px;margin:0 0 25px}
 .step-dot{position:absolute;left:0;top:1px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:#0b1e37;border:2px solid var(--blue);box-shadow:0 0 0 6px rgba(85,166,255,.06)}
-.step .card{padding:18px 20px}
+.step .card{padding:20px}
 .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.tag{padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.06);color:#c5d8ef;font-size:12px;border:1px solid var(--line)}
+.tag{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:#c5d8ef;font-size:12px;border:1px solid var(--line)}
 
 .arch{display:grid;grid-template-columns:1fr 80px 1fr;gap:16px;align-items:center}
 .arch-box{padding:24px;border-radius:20px;background:rgba(255,255,255,.055);border:1px solid var(--line)}
@@ -137,21 +164,22 @@ section{padding:85px 0}
 .arch-core strong{display:block;font-size:24px}
 
 table{width:100%;border-collapse:collapse;min-width:760px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-th,td{padding:13px 15px;border-bottom:1px solid var(--line);text-align:left}
-th{background:rgba(255,255,255,.06);color:#d6e7fa}
+th,td{padding:14px 18px;border-bottom:1px solid var(--line);text-align:left}
+th{background:rgba(255,255,255,.08);color:#d6e7fa;font-weight:800}
 td{color:#bfd0e5}
 .table-wrap{overflow:auto;border-radius:16px}
 
-.callout{padding:18px 20px;border-radius:16px;border:1px solid rgba(255,200,87,.25);background:rgba(255,200,87,.07);margin-top:18px}
+.callout{padding:20px;border-radius:16px;border:1px solid rgba(255,200,87,.25);background:rgba(255,200,87,.07);margin-top:20px}
 .callout strong{color:#ffd46c}.success{border-color:rgba(57,217,138,.25);background:rgba(57,217,138,.07)}
 .success strong{color:#6ff0af}
 
-.footer{padding:45px 0;background:#030a14;border-top:1px solid var(--line);color:#8fa4bf}
-.footer strong{color:#e9f2ff}
-.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.footer{padding:50px 0;background:#030a14;border-top:1px solid var(--line);color:#8fa4bf}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:30px;align-items:center}
+.footer strong{color:#e9f2ff;font-size:18px}
+.footer-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px}
 
 @media(max-width:1000px){
-  .hero-grid,.grid2{grid-template-columns:1fr}.hero-visual{min-height:420px}
+  .hero-grid,.grid2,.footer-grid{grid-template-columns:1fr}.hero-visual{min-height:420px}
   .grid{grid-template-columns:repeat(2,1fr)}
   .kpis{grid-template-columns:repeat(2,1fr)}
   .structure{grid-template-columns:1fr;gap:8px}.arrow{transform:rotate(90deg)}
@@ -163,14 +191,6 @@ td{color:#bfd0e5}
   .hero{padding:55px 0}.hero-visual{transform:scale(.8);margin:-25px 0}
   .grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}
   section{padding:60px 0}.node{width:135px;font-size:12px}
-}
-@media print{
-  body{background:#fff;color:#111}
-  .nav,.hero-actions,.progress,.bg-orb{display:none!important}
-  .hero{min-height:auto;background:#143a78;padding:35px 0}
-  .card,.kpi,.flow-wrap,.arch-box,.arch-core{box-shadow:none;background:#fff;color:#111;border:1px solid #ccc}
-  .card p,.section-title p,.kpi span,td{color:#444}
-  .reveal{opacity:1!important;transform:none!important}
 }
 </style>
 </head>
@@ -189,9 +209,19 @@ td{color:#bfd0e5}
         විධායක මණ්ඩල, උපදේශක මණ්ඩල, මාසික වාර, ව්‍යාපෘති, ලේඛන,
         notifications සහ වාර්ෂික නැවත පිහිටුවීම් එකම digital platform එකකට ගෙන ඒම.
       </p>
+
+      <!-- Project Author Official Badge -->
+      <div class="author-card">
+        <div class="author-avatar">M</div>
+        <div class="author-details">
+          <h4>Project by Minada Santhuja</h4>
+          <p>Media & Information Officer — Divisional Federation Of Youth Clubs Gampaha | 0755652773</p>
+        </div>
+      </div>
+
       <div class="hero-actions">
         <a class="btn btn-primary" href="#roadmap">System Roadmap බලන්න ↓</a>
-        <button class="btn btn-ghost" onclick="window.print()">📄 Print / Save PDF</button>
+        <button class="btn btn-pdf" onclick="downloadSystemPDF()">📄 Download Official PDF Report</button>
       </div>
     </div>
 
@@ -396,18 +426,22 @@ td{color:#bfd0e5}
 </section>
 
 <footer class="footer">
-<div class="container">
-  <strong>Gampaha Youth Club Management System</strong>
-  <div style="margin-top:6px">Animated System Proposal • Prepared for presentation, discussion and implementation planning.</div>
-  <div class="footer-actions">
-    <a class="btn btn-ghost" href="#roadmap">↑ Back to Roadmap</a>
-    <button class="btn btn-primary" onclick="window.print()">📄 Print / Save as PDF</button>
+<div class="container footer-grid">
+  <div>
+    <strong>Gampaha Youth Club Management System</strong>
+    <div style="margin-top:6px;color:var(--muted);font-size:14px">
+      Project Designed & Developed by <b>Minada Santhuja</b> (Media & Information Officer — Divisional Federation Of Youth Clubs Gampaha | Contact: 0755652773).
+    </div>
+  </div>
+  <div class="footer-actions" style="justify-content:flex-end">
+    <a class="btn btn-ghost" href="#roadmap">↑ Back to Top</a>
+    <button class="btn btn-pdf" onclick="downloadSystemPDF()">📄 Download Official PDF Report</button>
   </div>
 </div>
 </footer>
 
 <script>
-/* scroll reveal */
+/* presentation slide scroll reveal */
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('show'); io.unobserve(e.target);} })
@@ -428,7 +462,7 @@ const cio=new IntersectionObserver((entries)=>{
  entries.forEach(e=>{
   if(!e.isIntersecting)return;
   const el=e.target, target=Number(el.dataset.count);
-  let start=0; const duration=900; const t0=performance.now();
+  let start=0; const duration=1000; const t0=performance.now();
   function tick(t){
     const p=Math.min((t-t0)/duration,1);
     const ease=1-Math.pow(1-p,3);
@@ -448,6 +482,175 @@ setInterval(()=>{
  nodes[current].classList.add('active');
  current=(current+1)%nodes.length;
 },1800);
+
+/* Custom Multi-Page PDF Download Engine (jsPDF) */
+function downloadSystemPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Page 1 Background & Cover Header
+  doc.setFillColor(6, 16, 31);
+  doc.rect(0, 0, 210, 297, 'F');
+
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(20);
+  doc.setFont("helvetica", "bold");
+  doc.text("GAMPAHA YOUTH CLUB MANAGEMENT SYSTEM", 15, 30);
+
+  doc.setTextColor(50, 214, 233);
+  doc.setFontSize(12);
+  doc.text("Technical Specification & Architecture Proposal 2026/27", 15, 38);
+
+  doc.setLineWidth(0.5);
+  doc.setDrawColor(50, 214, 233);
+  doc.line(15, 43, 195, 43);
+
+  // Author Meta Information Box
+  doc.setFillColor(10, 25, 48);
+  doc.roundedRect(15, 50, 180, 32, 3, 3, 'F');
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(10);
+  doc.text("PROJECT LEAD & ARCHITECT:", 20, 58);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(12);
+  doc.text("Minada Santhuja", 20, 66);
+  doc.setFontSize(9);
+  doc.setTextColor(169, 187, 212);
+  doc.text("Media & Information Officer - Divisional Federation Of Youth Clubs Gampaha", 20, 73);
+  doc.text("Contact: 0755652773", 20, 78);
+
+  // Executive Overview
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(13);
+  doc.text("1. EXECUTIVE OVERVIEW & OBJECTIVES", 15, 95);
+  
+  doc.setTextColor(215, 228, 245);
+  doc.setFontSize(9.5);
+  const overviewText = "This system centralizes administration across 100 Grama Niladhari divisions in Gampaha District. It replaces manual registers and scattered WhatsApp reporting with a secure, cloud-based master platform for managing youth club registrations, member records, monthly meeting minutes, project approvals, and automated reporting.";
+  const splitOverview = doc.splitTextToSize(overviewText, 180);
+  doc.text(splitOverview, 15, 103);
+
+  // Core Modules Summary Table
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(13);
+  doc.text("2. CORE FUNCTIONAL MODULES", 15, 130);
+
+  const modulesData = [
+    ["Society Profile", "Manages permanent IDs, GN details, committee history, and advisor records."],
+    ["Member Management", "Centralized youth member database with status and position history."],
+    ["Monthly Meetings", "Logs meeting dates, attendance records, discussions, and decisions."],
+    ["Reports & Projects", "Draft -> Submit -> Review -> Approval workflow for projects & reports."],
+    ["Automation Engine", "Automated reminders on the 25th/28th for deadlines & overdue submissions."]
+  ];
+
+  let modY = 138;
+  modulesData.forEach(([mod, desc]) => {
+    doc.setFillColor(12, 28, 52);
+    doc.rect(15, modY, 180, 11, 'F');
+    doc.setTextColor(50, 214, 233);
+    doc.setFontSize(9.5);
+    doc.text(`* ${mod}:`, 18, modY + 7);
+    doc.setTextColor(200, 215, 235);
+    doc.setFontSize(8.5);
+    doc.text(desc, 65, modY + 7);
+    modY += 13;
+  });
+
+  // Database Schema Section
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(13);
+  doc.text("3. RELATIONAL DATABASE SCHEMA (SUPABASE)", 15, 212);
+
+  const dbTables = [
+    ["gn_divisions", "100 GN Division codes and geographic metadata"],
+    ["youth_societies", "Permanent profiles for each Youth Society"],
+    ["society_years", "Annual performance history (e.g. 2026/27)"],
+    ["members", "Master database of youth members"],
+    ["committee_assignments", "Historical executive board positions"],
+    ["monthly_reports", "Tracks draft, submitted & approved reports"]
+  ];
+
+  let dbY = 220;
+  dbTables.forEach(([tbl, purp]) => {
+    doc.setFillColor(10, 22, 42);
+    doc.rect(15, dbY, 180, 9, 'F');
+    doc.setTextColor(85, 166, 255);
+    doc.setFontSize(8.5);
+    doc.text(tbl, 20, dbY + 6);
+    doc.setTextColor(180, 198, 220);
+    doc.text(purp, 75, dbY + 6);
+    dbY += 11;
+  });
+
+  // Footer Page 1
+  doc.setFontSize(8);
+  doc.setTextColor(120, 140, 165);
+  doc.text("Gampaha Youth Club Management System Proposal • Page 1 of 2", 15, 288);
+
+  // Page 2: Architecture & Roadmap
+  doc.addPage();
+  doc.setFillColor(6, 16, 31);
+  doc.rect(0, 0, 210, 297, 'F');
+
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(13);
+  doc.text("4. SYSTEM ARCHITECTURE & TECH STACK", 15, 25);
+
+  doc.setFillColor(10, 25, 48);
+  doc.roundedRect(15, 32, 180, 40, 3, 3, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9.5);
+  doc.text("Public Website & Management Portal:", 20, 42);
+  doc.setTextColor(169, 187, 212);
+  doc.setFontSize(8.5);
+  doc.text("Responsive HTML5/CSS3 Interface with Presentation Animations & Live Analytics.", 20, 48);
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9.5);
+  doc.text("Cloud Infrastructure (Supabase Backend):", 20, 58);
+  doc.setTextColor(169, 187, 212);
+  doc.setFontSize(8.5);
+  doc.text("PostgreSQL Database, Row Level Security (RLS), File Storage & Automated Reminders.", 20, 64);
+
+  // Roadmap Summary
+  doc.setTextColor(85, 166, 255);
+  doc.setFontSize(13);
+  doc.text("5. DEVELOPMENT ROADMAP STAGES", 15, 85);
+
+  const roadmapSteps = [
+    "01. Requirements Finalization & Approval Rules",
+    "02. Database Relational Structure Design",
+    "03. Supabase Cloud Infrastructure Configuration",
+    "04. Import Master Data (100 GN Divisions)",
+    "05. Role-based Authentication (Admin/Officer/Society)",
+    "06. Society & Member Registration Modules",
+    "07. Monthly Meeting Logs & Report Workflow",
+    "08. Automated Reminder Engine Integration",
+    "09. Analytics Dashboards & Public Web Portal",
+    "10. Security Testing, Pilot Program & Production Launch"
+  ];
+
+  let rmY = 95;
+  roadmapSteps.forEach((step) => {
+    doc.setFillColor(12, 28, 52);
+    doc.rect(15, rmY, 180, 8, 'F');
+    doc.setTextColor(50, 214, 233);
+    doc.setFontSize(8.5);
+    doc.text(step, 20, rmY + 5.5);
+    rmY += 10;
+  });
+
+  // Footer Page 2
+  doc.setLineWidth(0.3);
+  doc.setDrawColor(85, 166, 255);
+  doc.line(15, 275, 195, 275);
+  doc.setTextColor(169, 187, 212);
+  doc.setFontSize(8);
+  doc.text("Gampaha Youth Club Management System • Author: Minada Santhuja (0755652773)", 15, 283);
+
+  // Save PDF Document directly
+  doc.save("Gampaha_Youth_Club_System_Proposal_Minada_Santhuja.pdf");
+}
 </script>
 </body>
 </html>
