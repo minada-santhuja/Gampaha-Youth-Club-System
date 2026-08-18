@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gampaha Youth Club Management System — Animated Proposal</title>
+<style>
+:root{
+  --bg:#06101f;
+  --bg2:#0a1930;
+  --card:rgba(255,255,255,.075);
+  --line:rgba(255,255,255,.12);
+  --text:#eff6ff;
+  --muted:#a9bbd4;
+  --blue:#55a6ff;
+  --cyan:#32d6e9;
+  --green:#39d98a;
+  --gold:#ffc857;
+  --pink:#ef67b4;
+  --shadow:0 20px 60px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(circle at 20% 10%,rgba(55,142,255,.14),transparent 28%),
+  radial-gradient(circle at 85% 18%,rgba(57,217,138,.10),transparent 24%),
+  linear-gradient(180deg,var(--bg),var(--bg2) 45%,#071222);
+  color:var(--text);font-family:"Noto Sans Sinhala","Segoe UI",Arial,sans-serif;line-height:1.7;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+/* animated background */
+.bg-orb{position:fixed;border-radius:50%;filter:blur(1px);pointer-events:none;z-index:-1;opacity:.55}
+.orb1{width:260px;height:260px;background:rgba(85,166,255,.12);left:-80px;top:20%;animation:float1 10s ease-in-out infinite}
+.orb2{width:220px;height:220px;background:rgba(57,217,138,.10);right:-60px;top:48%;animation:float2 12s ease-in-out infinite}
+.orb3{width:180px;height:180px;background:rgba(239,103,180,.10);left:40%;bottom:5%;animation:float3 9s ease-in-out infinite}
+@keyframes float1{50%{transform:translate(50px,-35px)}}
+@keyframes float2{50%{transform:translate(-45px,45px)}}
+@keyframes float3{50%{transform:translate(35px,-28px)}}
+
+.container{width:min(1200px,92%);margin:auto}
+.hero{min-height:100vh;display:grid;place-items:center;position:relative;padding:70px 0}
+.hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:40px;align-items:center}
+.eyebrow{
+  display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.06);
+  padding:7px 13px;border-radius:999px;color:#cce3ff;font-weight:800;font-size:13px;letter-spacing:.3px
+}
+h1{font-size:clamp(40px,6vw,76px);line-height:1.02;margin:18px 0}
+.hero h1 span{background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy{font-size:18px;color:var(--muted);max-width:760px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
+.btn{padding:12px 18px;border-radius:12px;border:1px solid var(--line);font-weight:900;transition:.25s;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,#2f7cf7,#37b7f6);color:#fff}
+.btn-ghost{background:rgba(255,255,255,.05);color:#fff}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(50,130,255,.18)}
+
+.hero-visual{position:relative;min-height:490px}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(85,166,255,.28);left:50%;top:50%;transform:translate(-50%,-50%)}
+.r1{width:420px;height:420px;animation:spin 22s linear infinite}
+.r2{width:300px;height:300px;animation:spin 16s linear reverse infinite}
+.r3{width:185px;height:185px;animation:pulse 3.2s ease-in-out infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes pulse{50%{box-shadow:0 0 50px rgba(50,214,233,.25);transform:translate(-50%,-50%) scale(1.05)}}
+.center-core{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:165px;height:165px;border-radius:28px;
+  display:grid;place-items:center;text-align:center;padding:20px;
+  background:linear-gradient(145deg,#122a4a,#0b1b31);border:1px solid rgba(255,255,255,.14);
+  box-shadow:var(--shadow)
+}
+.center-core b{font-size:18px}
+.node{position:absolute;width:160px;padding:12px 10px;text-align:center;border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:16px;backdrop-filter:blur(8px);box-shadow:var(--shadow);font-size:13px;font-weight:900}
+.n1{left:0;top:17%;animation:node1 5s ease-in-out infinite}.n2{right:0;top:10%;animation:node2 6s ease-in-out infinite}
+.n3{right:2%;bottom:15%;animation:node3 5.5s ease-in-out infinite}.n4{left:2%;bottom:10%;animation:node4 6.2s ease-in-out infinite}
+@keyframes node1{50%{transform:translateY(-12px)}} @keyframes node2{50%{transform:translateY(14px)}}
+@keyframes node3{50%{transform:translateY(-10px)}} @keyframes node4{50%{transform:translateY(10px)}}
+
+.nav{
+  position:sticky;top:0;z-index:50;background:rgba(4,13,26,.78);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)
+}
+.nav-inner{display:flex;gap:8px;align-items:center;overflow:auto;padding:9px 0}
+.nav a{white-space:nowrap;padding:8px 11px;border-radius:9px;color:var(--muted);font-size:13px;font-weight:800}
+.nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.progress{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));z-index:100}
+
+section{padding:85px 0}
+.section-kicker{color:var(--cyan);font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.section-title{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}
+.section-title h2{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:8px 0}
+.section-title p{margin:0;max-width:760px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden
+}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.07),transparent 28%,transparent 70%,rgba(50,214,233,.05));pointer-events:none}
+.card h3{margin:0 0 7px;font-size:19px}
+.card p{margin:7px 0;color:var(--muted)}
+.icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:rgba(85,166,255,.12);border:1px solid rgba(85,166,255,.18);font-size:21px;margin-bottom:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
+.kpi b{display:block;font-size:34px;color:#fff}
+.kpi span{color:var(--muted);font-size:13px}
+
+.structure{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;gap:9px;align-items:center}
+.sbox{padding:16px 10px;border-radius:16px;text-align:center;font-weight:900;font-size:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);transition:.3s}
+.sbox:hover{transform:translateY(-6px);border-color:rgba(85,166,255,.45);box-shadow:0 12px 30px rgba(50,130,255,.12)}
+.arrow{font-size:26px;color:var(--cyan)}
+
+.flow-wrap{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:20px;overflow:auto}
+.flow{display:flex;align-items:stretch;gap:12px;min-width:1000px}
+.flow-node{width:170px;padding:17px 13px;border-radius:15px;background:#0c1b31;border:1px solid rgba(85,166,255,.28);text-align:center;position:relative}
+.flow-node .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;margin:0 auto 8px;background:rgba(85,166,255,.16);color:var(--cyan);font-weight:900}
+.flow-arrow{align-self:center;color:var(--cyan);font-size:24px}
+.flow-node.active{animation:activeNode 1.8s ease-in-out infinite}
+@keyframes activeNode{50%{transform:translateY(-8px);box-shadow:0 12px 34px rgba(50,214,233,.12)}}
+
+.timeline{position:relative}
+.timeline:before{content:"";position:absolute;left:21px;top:0;bottom:0;width:2px;background:linear-gradient(var(--blue),var(--green))}
+.step{position:relative;padding-left:62px;margin:0 0 23px}
+.step-dot{position:absolute;left:0;top:1px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:#0b1e37;border:2px solid var(--blue);box-shadow:0 0 0 6px rgba(85,166,255,.06)}
+.step .card{padding:18px 20px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.tag{padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.06);color:#c5d8ef;font-size:12px;border:1px solid var(--line)}
+
+.arch{display:grid;grid-template-columns:1fr 80px 1fr;gap:16px;align-items:center}
+.arch-box{padding:24px;border-radius:20px;background:rgba(255,255,255,.055);border:1px solid var(--line)}
+.arch-box h3{margin:0 0 10px}.arch-arrow{text-align:center;font-size:38px;color:var(--cyan)}
+.arch-core{grid-column:1/-1;text-align:center;padding:24px;border-radius:20px;background:linear-gradient(135deg,rgba(85,166,255,.12),rgba(57,217,138,.08));border:1px solid rgba(85,166,255,.28)}
+.arch-core strong{display:block;font-size:24px}
+
+table{width:100%;border-collapse:collapse;min-width:760px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+th,td{padding:13px 15px;border-bottom:1px solid var(--line);text-align:left}
+th{background:rgba(255,255,255,.06);color:#d6e7fa}
+td{color:#bfd0e5}
+.table-wrap{overflow:auto;border-radius:16px}
+
+.callout{padding:18px 20px;border-radius:16px;border:1px solid rgba(255,200,87,.25);background:rgba(255,200,87,.07);margin-top:18px}
+.callout strong{color:#ffd46c}.success{border-color:rgba(57,217,138,.25);background:rgba(57,217,138,.07)}
+.success strong{color:#6ff0af}
+
+.footer{padding:45px 0;background:#030a14;border-top:1px solid var(--line);color:#8fa4bf}
+.footer strong{color:#e9f2ff}
+.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+
+@media(max-width:1000px){
+  .hero-grid,.grid2{grid-template-columns:1fr}.hero-visual{min-height:420px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .structure{grid-template-columns:1fr;gap:8px}.arrow{transform:rotate(90deg)}
+  .arch{grid-template-columns:1fr}
+  .arch-arrow{transform:rotate(90deg)}
+  .arch-core{grid-column:auto}
+}
+@media(max-width:640px){
+  .hero{padding:55px 0}.hero-visual{transform:scale(.8);margin:-25px 0}
+  .grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}
+  section{padding:60px 0}.node{width:135px;font-size:12px}
+}
+@media print{
+  body{background:#fff;color:#111}
+  .nav,.hero-actions,.progress,.bg-orb{display:none!important}
+  .hero{min-height:auto;background:#143a78;padding:35px 0}
+  .card,.kpi,.flow-wrap,.arch-box,.arch-core{box-shadow:none;background:#fff;color:#111;border:1px solid #ccc}
+  .card p,.section-title p,.kpi span,td{color:#444}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="bg-orb orb1"></div><div class="bg-orb orb2"></div><div class="bg-orb orb3"></div>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">🚀 DIGITAL TRANSFORMATION PROPOSAL • 2026/27</span>
+      <h1>Gampaha <span>Youth Club</span><br>Management System</h1>
+      <p class="hero-copy">
+        ගම්පහ ප්‍රාදේශීය මට්ටමේ යෞවන සමාජ 100ක තොරතුරු, සාමාජිකයින්,
+        විධායක මණ්ඩල, උපදේශක මණ්ඩල, මාසික වාර, ව්‍යාපෘති, ලේඛන,
+        notifications සහ වාර්ෂික නැවත පිහිටුවීම් එකම digital platform එකකට ගෙන ඒම.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#roadmap">System Roadmap බලන්න ↓</a>
+        <button class="btn btn-ghost" onclick="window.print()">📄 Print / Save PDF</button>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+      <div class="center-core"><div>👥<br><b>Gampaha Youth<br>Digital System</b></div></div>
+      <div class="node n1">🏢<br>100 GN Divisions</div>
+      <div class="node n2">👥<br>Youth Societies</div>
+      <div class="node n3">📊<br>Reports & Projects</div>
+      <div class="node n4">🔔<br>Notifications</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#overview">Overview</a><a href="#hierarchy">Hierarchy</a><a href="#modules">Modules</a>
+    <a href="#workflow">Workflow</a><a href="#database">Database</a><a href="#automation">Automation</a>
+    <a href="#roadmap">Roadmap</a><a href="#architecture">Architecture</a>
+  </div>
+</nav>
+
+<section id="overview">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">01 • Overview</div><h2>ඇයි මේ System එක?</h2></div>
+    <p>පරණ manual register, WhatsApp reports සහ scattered files වෙනුවට central digital master record එකක්.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi reveal"><b data-count="100">0</b><span>GN Divisions</span></div>
+    <div class="kpi reveal"><b data-count="100">0</b><span>Youth Societies</span></div>
+    <div class="kpi reveal"><b data-count="12">0</b><span>Monthly Cycles</span></div>
+    <div class="kpi reveal"><b data-count="1">0</b><span>Central Platform</span></div>
+  </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card reveal"><div class="icon">⚠️</div><h3>Current Problems</h3><p>තොරතුරු විවිධ තැන්වල තිබීම, report එකතු කිරීම ප්‍රමාද වීම, duplicate data, පැරණි records සෙවීම අපහසු වීම.</p></div>
+    <div class="card success reveal"><div class="icon">✅</div><h3>Target Solution</h3><p>සෑම Society එකකටම digital profile එකක්; වාර්ෂික history එක රැකෙන අතර monthly reports, projects සහ communication centrally manage වේ.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="hierarchy" style="background:rgba(255,255,255,.025)">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">02 • Hierarchy</div><h2>System එකේ ව්‍යුහය</h2></div>
+    <p>ඉහළ සිට පහළට official information flow එක.</p>
+  </div>
+  <div class="structure reveal">
+    <div class="sbox">🇱🇰<br>National Youth<br>Services Council</div><div class="arrow">→</div>
+    <div class="sbox">🏛️<br>Gampaha<br>Balmandalaya</div><div class="arrow">→</div>
+    <div class="sbox">📍<br>100 GN<br>Divisions</div><div class="arrow">→</div>
+    <div class="sbox">🏢<br>Youth<br>Societies</div><div class="arrow">→</div>
+    <div class="sbox">👥<br>Youth<br>Members</div>
+  </div>
+  <div class="arch reveal" style="margin-top:25px">
+    <div class="arch-box"><h3>🌐 Public Website</h3><p>News, Events, Approved Projects, Gallery, Public Announcements.</p></div>
+    <div class="arch-arrow">↔</div>
+    <div class="arch-box"><h3>🔐 Management Portal</h3><p>Admin, Officers, Societies, Committee Members & Youth Members.</p></div>
+    <div class="arch-core"><strong>☁️ SUPABASE BACKEND</strong>Database + Authentication + Storage + Security + Automation</div>
+  </div>
+</div>
+</section>
+
+<section id="modules">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">03 • Core Modules</div><h2>System එකේ ප්‍රධාන කොටස්</h2></div>
+    <p>සම්පූර්ණ system එක build වෙන්නේ මේ modules එකින්.</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal"><div class="icon">🏢</div><h3>Society Registration</h3><p>Society profile, GN Division, advisor, committee, members, documents.</p></div>
+    <div class="card reveal"><div class="icon">👥</div><h3>Member Management</h3><p>Member registration, status, membership history සහ society assignment.</p></div>
+    <div class="card reveal"><div class="icon">👔</div><h3>Committee Management</h3><p>President, Secretary, Treasurer, Organizer ඇතුළු annual positions.</p></div>
+    <div class="card reveal"><div class="icon">🧑‍🏫</div><h3>Advisor Management</h3><p>සෑම Society එකකටම අදාළ උපදේශක මණ්ඩල තොරතුරු.</p></div>
+    <div class="card reveal"><div class="icon">📅</div><h3>Monthly Meetings</h3><p>වාර දිනය, attendance, discussions, decisions, next actions.</p></div>
+    <div class="card reveal"><div class="icon">📝</div><h3>Monthly Reports</h3><p>Draft → Submit → Review → Approve → Overdue tracking.</p></div>
+    <div class="card reveal"><div class="icon">🚀</div><h3>Project Management</h3><p>Project create, submit, photos, documents, review, approval, publication.</p></div>
+    <div class="card reveal"><div class="icon">📢</div><h3>Announcements</h3><p>සම්මේලනයෙන් පහළ Society වෙත circulars, deadlines, events.</p></div>
+    <div class="card reveal"><div class="icon">📊</div><h3>Reports & Analytics</h3><p>Society, member, project, monthly සහ annual performance statistics.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="workflow" style="background:rgba(85,166,255,.035)">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">04 • Live Workflow</div><h2>Society එක system එක තුළ වැඩ කරන ආකාරය</h2></div>
+    <p>Presentation එකකදී මේ flow එක simple ලෙස පෙන්වන්න පුළුවන්.</p>
+  </div>
+  <div class="flow-wrap reveal">
+    <div class="flow">
+      <div class="flow-node active"><div class="num">1</div><b>Register Society</b><small>Society + Advisor + Committee</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">2</div><b>Register Members</b><small>Member Master Records</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">3</div><b>Monthly Meeting</b><small>Attendance + Decisions</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">4</div><b>Submit Report</b><small>Direct to Balmandalaya</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">5</div><b>Submit Project</b><small>Photos + Files</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">6</div><b>Review</b><small>Approve / Return</small></div><div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="num">7</div><b>Publish / Report</b><small>Analytics + Public Website</small></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="database">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">05 • Database</div><h2>Data structure</h2></div>
+    <p>Society එක, person එක සහ year එක වෙන්කර තැබීම නිසා historical data නැති නොවේ.</p>
+  </div>
+  <div class="table-wrap reveal">
+    <table>
+      <thead><tr><th>Table</th><th>Purpose</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>gn_divisions</td><td>වසම් 100</td><td>GN Code, Name</td></tr>
+        <tr><td>youth_societies</td><td>Permanent Society profile</td><td>Society ID, Name</td></tr>
+        <tr><td>society_years</td><td>Annual history</td><td>2026/27, 2027/28</td></tr>
+        <tr><td>members</td><td>Master member records</td><td>Name, DOB, Contact</td></tr>
+        <tr><td>committee_assignments</td><td>Position history</td><td>President, Secretary</td></tr>
+        <tr><td>monthly_meetings</td><td>Meeting records</td><td>Date, Attendance, Decisions</td></tr>
+        <tr><td>monthly_reports</td><td>Reports and approvals</td><td>Status, Date</td></tr>
+        <tr><td>projects</td><td>Project management</td><td>Title, Results</td></tr>
+        <tr><td>documents</td><td>Files & images</td><td>PDF, Photos</td></tr>
+        <tr><td>notifications</td><td>Automated messages</td><td>Reminder, Approval</td></tr>
+        <tr><td>audit_logs</td><td>Accountability</td><td>Who, What, When</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<section id="automation" style="background:rgba(57,217,138,.035)">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">06 • Automation</div><h2>System එකෙන්ම වැඩ වෙන්නේ කොහොමද?</h2></div>
+    <p>Follow-up calls සහ manual collection අඩු කිරීම.</p>
+  </div>
+  <div class="grid2">
+    <div class="card reveal"><div class="icon">⏰</div><h3>Monthly Reminder Engine</h3><p>25th reminder → deadline alert → overdue status → admin dashboard update.</p><div class="tags"><span class="tag">25th</span><span class="tag">28th</span><span class="tag">Deadline</span><span class="tag">Overdue</span></div></div>
+    <div class="card reveal"><div class="icon">🔔</div><h3>Communication Engine</h3><p>New circular / event / approval / returned report → relevant users receive notification.</p><div class="tags"><span class="tag">Circular</span><span class="tag">Event</span><span class="tag">Approval</span></div></div>
+    <div class="card reveal"><div class="icon">📈</div><h3>Live Dashboard</h3><p>Submitted reports, pending items, active societies, projects and membership statistics automatically update.</p></div>
+    <div class="card reveal"><div class="icon">🔄</div><h3>Annual Renewal</h3><p>Previous year → copy → update committee/members → submit → approve → new year active.</p></div>
+  </div>
+  <div class="callout success reveal"><strong>Core Rule:</strong> WhatsApp / calls = communication support. <strong>System = official digital master record.</strong></div>
+</div>
+</section>
+
+<section id="roadmap">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">07 • Build Roadmap</div><h2>Step-by-step system development</h2></div>
+    <p>මේ order එකෙන් ගියොත් නැවත නැවත rebuild කරන්න අවශ්‍යතාව අඩු වේ.</p>
+  </div>
+  <div class="timeline">
+    <div class="step reveal"><div class="step-dot">01</div><div class="card"><h3>Requirements Finalization</h3><p>Rules, fields, user roles, workflows, approval rules.</p></div></div>
+    <div class="step reveal"><div class="step-dot">02</div><div class="card"><h3>Database Design</h3><p>Tables, relationships, IDs, historical annual structure.</p></div></div>
+    <div class="step reveal"><div class="step-dot">03</div><div class="card"><h3>Supabase Setup</h3><p>PostgreSQL database, Authentication, Storage, RLS.</p></div></div>
+    <div class="step reveal"><div class="step-dot">04</div><div class="card"><h3>Master Data Import</h3><p>100 GN divisions, initial Society IDs and administrator records.</p></div></div>
+    <div class="step reveal"><div class="step-dot">05</div><div class="card"><h3>Login & Roles</h3><p>Super Admin, Balmandalaya, Officers, Societies, Members.</p></div></div>
+    <div class="step reveal"><div class="step-dot">06</div><div class="card"><h3>Society Registration</h3><p>Society profile, advisor, committee, members, documents.</p></div></div>
+    <div class="step reveal"><div class="step-dot">07</div><div class="card"><h3>Member + Committee Management</h3><p>Member database and annual position history.</p></div></div>
+    <div class="step reveal"><div class="step-dot">08</div><div class="card"><h3>Monthly Meetings + Reports</h3><p>Meeting record, attendance, report submission, review and approval.</p></div></div>
+    <div class="step reveal"><div class="step-dot">09</div><div class="card"><h3>Projects + Documents</h3><p>Project workflow, files, photos, review and approval.</p></div></div>
+    <div class="step reveal"><div class="step-dot">10</div><div class="card"><h3>Notifications + Automation</h3><p>Deadlines, reminders, announcements and alerts.</p></div></div>
+    <div class="step reveal"><div class="step-dot">11</div><div class="card"><h3>Dashboards + Analytics</h3><p>Society, Officer and Balmandalaya dashboards.</p></div></div>
+    <div class="step reveal"><div class="step-dot">12</div><div class="card"><h3>Annual Renewal</h3><p>Close previous year → open new year → copy/update → approve.</p></div></div>
+    <div class="step reveal"><div class="step-dot">13</div><div class="card"><h3>Public Website</h3><p>News, events, approved projects, gallery and announcements.</p></div></div>
+    <div class="step reveal"><div class="step-dot">14</div><div class="card"><h3>Integration</h3><p>Public website reads approved/live data from the central system.</p></div></div>
+    <div class="step reveal"><div class="step-dot">15</div><div class="card"><h3>Testing + Security</h3><p>Permissions, data isolation, workflow, performance and security tests.</p></div></div>
+    <div class="step reveal"><div class="step-dot">16</div><div class="card"><h3>Pilot</h3><p>5–10 societies → feedback → improvements.</p></div></div>
+    <div class="step reveal"><div class="step-dot">17</div><div class="card"><h3>Production Deploy</h3><p>Hosting + domain + environment configuration.</p></div></div>
+    <div class="step reveal"><div class="step-dot">18</div><div class="card"><h3>Full Launch</h3><p>All 100 societies onboard කිරීම.</p></div></div>
+  </div>
+</div>
+</section>
+
+<section id="architecture" style="background:rgba(255,255,255,.025)">
+<div class="container">
+  <div class="section-title reveal">
+    <div><div class="section-kicker">08 • Final Architecture</div><h2>අවසාන system එක</h2></div>
+    <p>Public website එක සහ private management portal එක එකම centralized backend එකකට connect වේ.</p>
+  </div>
+  <div class="card reveal" style="text-align:center">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="arch-box"><h3>🌐 Public Website</h3><p>News • Events • Projects • Gallery • Announcements</p></div>
+      <div class="arch-box"><h3>🔐 Management Portal</h3><p>Admin • Officer • Society • Member dashboards</p></div>
+    </div>
+    <div style="font-size:35px;color:var(--cyan);padding:9px">↓</div>
+    <div class="arch-core"><strong>☁️ SUPABASE</strong>PostgreSQL + Auth + Storage + Security + Automation</div>
+    <div style="font-size:35px;color:var(--cyan);padding:9px">↓</div>
+    <div class="grid" style="margin:0">
+      <div class="card"><h3>🏢 100 Societies</h3><p>Permanent IDs + annual history</p></div>
+      <div class="card"><h3>👥 Members</h3><p>Master records + membership history</p></div>
+      <div class="card"><h3>📊 Operations</h3><p>Meetings + Reports + Projects + Documents</p></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="callout success reveal"><strong>Expected Result</strong><br>සම්මේලනයට live dashboard එකකින් 100 Society තත්ත්වය, reports, projects, members සහ pending work එක බලන්න පුළුවන්.</div>
+    <div class="callout reveal"><strong>Future Ready</strong><br>පසුව PWA/mobile app, SMS/Email integrations, advanced analytics සහ district-level expansion එකතු කළ හැක.</div>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+  <strong>Gampaha Youth Club Management System</strong>
+  <div style="margin-top:6px">Animated System Proposal • Prepared for presentation, discussion and implementation planning.</div>
+  <div class="footer-actions">
+    <a class="btn btn-ghost" href="#roadmap">↑ Back to Roadmap</a>
+    <button class="btn btn-primary" onclick="window.print()">📄 Print / Save as PDF</button>
+  </div>
+</div>
+</footer>
+
+<script>
+/* scroll reveal */
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('show'); io.unobserve(e.target);} })
+},{threshold:.12});
+reveals.forEach(el=>io.observe(el));
+
+/* top progress bar */
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  const pct=(window.scrollY/(doc.scrollHeight-doc.clientHeight))*100;
+  progress.style.width=pct+'%';
+});
+
+/* animated KPI counters */
+const counters=document.querySelectorAll('[data-count]');
+const cio=new IntersectionObserver((entries)=>{
+ entries.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target, target=Number(el.dataset.count);
+  let start=0; const duration=900; const t0=performance.now();
+  function tick(t){
+    const p=Math.min((t-t0)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(start+(target-start)*ease);
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick); cio.unobserve(el);
+ });
+},{threshold:.6});
+counters.forEach(c=>cio.observe(c));
+
+/* automatically pulse workflow nodes */
+const nodes=[...document.querySelectorAll('.flow-node')];
+let current=0;
+setInterval(()=>{
+ nodes.forEach(n=>n.classList.remove('active'));
+ nodes[current].classList.add('active');
+ current=(current+1)%nodes.length;
+},1800);
+</script>
+</body>
+</html>
